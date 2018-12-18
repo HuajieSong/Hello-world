@@ -1,11 +1,15 @@
 #-*- coding:utf-8 -*-
 
 from xml.dom.minidom import parse
-
 def parse_plist(plist_path):
     tree=parse(plist_path)  #打开plist文件
     root=tree.documentElement
     string=root.getElementsByTagName('string')
     url=string[1].childNodes[0].data
 
+   #为了兼容dmtc，增加判断来标识保存失败时的具体原因（是解析问题还是本身文件不存在）
+   if not url:
+        return None
+
     return url
+
